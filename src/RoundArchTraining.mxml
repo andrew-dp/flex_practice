@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:vo="vo.*"
+				layout="absolute" 
+				minWidth="955" minHeight="600"
+				initialize="application1_initializeHandler(event)">
+	<mx:Script>
+		
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.validators.RegExpValidationResult;
+			
+			import vo.ProductVO;
+			
+			private var xmlLoader:URLLoader;
+			private var catalogXML:XML;
+			
+			private var phoneCategories:ArrayCollection;
+			
+			private const DP_DATA_URL:String = "http://digitalprimates.net/flexstore/data/catalog.xml";
+			
+			private function testRegex( regex:RegExp, value:String ):Boolean
+			{
+				return new RegExp(regex).test(value) ? true : false
+			}
+			
+			private function sortProductsByCategory( products:ArrayCollection ):ArrayCollection 
+			{
+				for each( var product:ProductVO in products) 
+				{
+					if ( testRegex( /[a-zA-Z]{5}\s(N)/, product.name ) ) {
+						trace("nokia N");
+					} else if ( testRegex( /[a-zA-Z]{5}\s(3)/, product.name ) ) {
+						trace("nokia 3");
+					} else if ( testRegex( /[a-zA-Z]{5}\s(6)/, product.name ) ) {
+						trace("nokia 6");
+					} else if ( testRegex( /[a-zA-Z]{5}\s(7)/, product.name ) ) {
+						trace("nokia 7");
+					} else if ( testRegex( /[a-zA-Z]{5}\s(9)/, product.name ) ) {
+						trace("nokia 9");
+					} else {
+						trace("foo");
+					}
+
+				}
+				
+				return phoneCategories;
+			}
+			
+			
+			private function parseXML(catalogXML:XML):ArrayCollection 
+			{
+				var products:ArrayCollection = new ArrayCollection();
+				
+				for each( var productXML:XML in catalogXML.product ) 
+				{
+					var productId:int = productXML[0].@productId;
+					var name:String = productXML[0].name;
+					var description:String = productXML[0].description;
+					var price:Number = productXML[0].price;
+					var image:String = productXML[0].image;
+					var series:int = productXML[0].series;
+					var triband:Boolean = productXML[0].triband;
+					var camera:Boolean = productXML[0].camera;
+					var video:Boolean = productXML[0].video;
+					var highlight1:String = productXML[0].highlight1;
+					var highlight2:String = productXML[0].highlight2;
+					
+					var product:ProductVO = new ProductVO( productId, name, description, price, image, series, triband, camera, video, highlight1, highlight2 );
+					
+					products.addItem(product);
+				}
+				
+				return products;
+			}
+			
+			private function handle_xmlLoaderComplete(e:Event):void 
+			{
+				catalogXML = XML(e.target.data);
+				var products:ArrayCollection = parseXML(catalogXML);
+				sortProductsByCategory(products);
+			}
+			
+			protected function application1_initializeHandler(event:FlexEvent):void
+			{
+				xmlLoader = new URLLoader();
+				
+				xmlLoader.addEventListener(Event.COMPLETE, handle_xmlLoaderComplete);
+				xmlLoader.load(new URLRequest(DP_DATA_URL));
+			}
+		]]>
+
+		
+	</mx:Script>
+	
+</mx:Application>
