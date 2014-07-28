@@ -12,6 +12,7 @@
 			import mx.events.FlexEvent;
 			import mx.validators.RegExpValidationResult;
 			
+			import vo.PhoneCategoryVO;
 			import vo.ProductVO;
 			
 			private var xmlLoader:URLLoader;
@@ -21,38 +22,76 @@
 			
 			private const DP_DATA_URL:String = "http://digitalprimates.net/flexstore/data/catalog.xml";
 			
+			private const NOKIA_N:String = "Nokia N";
+			private const NOKIA_3000:String = "Nokia 3000";
+			private const NOKIA_6000:String = "Nokia 6000";
+			private const NOKIA_7000:String = "Nokia 7000";
+			private const NOKIA_9000:String = "Nokia 9000";
+			
+			private var nokiaNPhones:ArrayCollection = new ArrayCollection();
+			private var nokia3Phones:ArrayCollection = new ArrayCollection();
+			private var nokia6Phones:ArrayCollection = new ArrayCollection();
+			private var nokia7Phones:ArrayCollection = new ArrayCollection();
+			private var nokia9Phones:ArrayCollection = new ArrayCollection();
+			
+			
+			private function buildPhoneCategories():void 
+			{
+				var nokiaNPhonesVO:PhoneCategoryVO = new PhoneCategoryVO(NOKIA_N, nokiaNPhones);
+				var nokia3PhonesVO:PhoneCategoryVO = new PhoneCategoryVO(NOKIA_3000, nokia3Phones);
+				var nokia6PhonesVO:PhoneCategoryVO = new PhoneCategoryVO(NOKIA_6000, nokia6Phones);
+				var nokia7PhonesVO:PhoneCategoryVO = new PhoneCategoryVO(NOKIA_7000, nokia7Phones);
+				var nokia9PhonesVO:PhoneCategoryVO = new PhoneCategoryVO(NOKIA_9000, nokia9Phones);
+				
+				trace("nokiaNPhonesVO: " + nokiaNPhonesVO.name + ' ' + nokiaNPhones.length);
+				trace("nokia3PhonesVO: " + nokia3PhonesVO.name + ' ' + nokia3Phones.length);
+				trace("nokia6PhonesVO: " + nokia6PhonesVO.name + ' ' + nokia6Phones.length);
+				trace("nokia7PhonesVO: " + nokia7PhonesVO.name + ' ' + nokia7Phones.length);
+				trace("nokia9PhonesVO: " + nokia9PhonesVO.name + ' ' + nokia9Phones.length);
+			}
+			
 			private function testRegex( regex:RegExp, value:String ):Boolean
 			{
 				return new RegExp(regex).test(value) ? true : false
 			}
 			
-			private function sortProductsByCategory( products:ArrayCollection ):ArrayCollection 
+			private function sortProductsByCategory( products:Array ):void 
 			{
-				for each( var product:ProductVO in products) 
+				for each(var product:ProductVO in products) 
 				{
-					if ( testRegex( /[a-zA-Z]{5}\s(N)/, product.name ) ) {
-						trace("nokia N");
-					} else if ( testRegex( /[a-zA-Z]{5}\s(3)/, product.name ) ) {
-						trace("nokia 3");
-					} else if ( testRegex( /[a-zA-Z]{5}\s(6)/, product.name ) ) {
-						trace("nokia 6");
-					} else if ( testRegex( /[a-zA-Z]{5}\s(7)/, product.name ) ) {
-						trace("nokia 7");
-					} else if ( testRegex( /[a-zA-Z]{5}\s(9)/, product.name ) ) {
-						trace("nokia 9");
-					} else {
-						trace("foo");
+					if (testRegex( /[a-zA-Z]{5}\s(N)/, product.name)) 
+					{
+						nokiaNPhones.addItem( product );
+					} 
+					else if (testRegex( /[a-zA-Z]{5}\s(3)/, product.name)) 
+					{
+						nokia3Phones.addItem( product );
+					} 
+					else if (testRegex( /[a-zA-Z]{5}\s(6)/, product.name)) 
+					{
+						nokia6Phones.addItem( product );
+					} 
+					else if (testRegex( /[a-zA-Z]{5}\s(7)/, product.name)) 
+					{
+						nokia7Phones.addItem( product );
+					} 
+					else if (testRegex( /[a-zA-Z]{5}\s(9)/, product.name)) 
+					{
+						nokia9Phones.addItem( product );
+					} 
+					else 
+					{
+						trace("invalid product name in xml");
 					}
-
 				}
 				
-				return phoneCategories;
+				buildPhoneCategories();
 			}
 			
 			
-			private function parseXML(catalogXML:XML):ArrayCollection 
+			private function parseXML(catalogXML:XML):Array 
 			{
-				var products:ArrayCollection = new ArrayCollection();
+				var products:Array = new Array();
 				
 				for each( var productXML:XML in catalogXML.product ) 
 				{
@@ -70,7 +109,7 @@
 					
 					var product:ProductVO = new ProductVO( productId, name, description, price, image, series, triband, camera, video, highlight1, highlight2 );
 					
-					products.addItem(product);
+					products.push(product);
 				}
 				
 				return products;
@@ -79,7 +118,7 @@
 			private function handle_xmlLoaderComplete(e:Event):void 
 			{
 				catalogXML = XML(e.target.data);
-				var products:ArrayCollection = parseXML(catalogXML);
+				var products:Array = parseXML(catalogXML);
 				sortProductsByCategory(products);
 			}
 			

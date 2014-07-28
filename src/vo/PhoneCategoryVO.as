@@ -35,9 +35,10 @@ package vo
 		
 		//-------------------------------------------------------------------
 		
-		public function PhoneCategoryVO()
+		public function PhoneCategoryVO( name:String, children:ArrayCollection )
 		{
-			super();
+			this.name = name;
+			this.children = children;
 		}
 	}
 }
