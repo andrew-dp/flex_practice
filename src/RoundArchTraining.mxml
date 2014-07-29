@@ -107,11 +107,11 @@
 				filtered7Category = new PhoneCategoryVO( NOKIA_7000, filtered7Products );
 				filtered9Category = new PhoneCategoryVO( NOKIA_9000, filtered9Products );
 				
-				phoneCategories.addItem(filteredNCategory);
-				phoneCategories.addItem(filtered3Category); 
-				phoneCategories.addItem(filtered6Category); 
-				phoneCategories.addItem(filtered7Category); 
-				phoneCategories.addItem(filtered9Category); 
+				phoneCategories.addItem( filteredNCategory );
+				phoneCategories.addItem( filtered3Category ); 
+				phoneCategories.addItem( filtered6Category ); 
+				phoneCategories.addItem( filtered7Category ); 
+				phoneCategories.addItem( filtered9Category ); 
 			}
 			
 			private function parseXML( catalogXML:XML ):Array 
@@ -155,31 +155,30 @@
 				xmlLoader.load(new URLRequest(DP_DATA_URL));
 			}
 			
+			[Bindable]
+			private var selectedCategory:ArrayCollection;
+			
 			protected function sortButton_clickHandler(event:MouseEvent):void
 			{
-				
+//				selectedCategory = this.selectedItem.data;
 			}
-			
-			protected function eventsGrid_changeHandler(event:ListEvent):void
-			{
-				
-			}
-			
+	
 		]]>
-
+	
 	</mx:Script>
 	
 	<mx:VBox>
 		
-		<mx:Button 
-			label="Sort"
+		<mx:ComboBox 
+			id="sortingBox" 
+			dataProvider="{phoneCategories}"
+			labelField="name"
 			click="sortButton_clickHandler(event)"
 			/>
 		
 		<mx:AdvancedDataGrid
 			id="eventsGrid"
-			dataProvider="{phoneCategories.getItemAt(1).children}"
-			change="eventsGrid_changeHandler(event)"
+			dataProvider="{sortingBox.selectedItem.children}"
 			height="250"
 			>
 			
