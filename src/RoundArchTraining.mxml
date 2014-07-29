@@ -10,6 +10,7 @@
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
 			
 			import vo.PhoneCategoryVO;
 			import vo.ProductVO;
@@ -65,20 +66,53 @@
 				return testRegex(/[a-zA-Z]{5}\s(9)/, product.name);
 			}
 			
-			
 			//-------------------------------------------------------------------
 				
-			private function sortProductsByCategory( productsCollection:ArrayCollection, filter:Function, categoryCollection:PhoneCategoryVO, categoryName:String ):void
+			private function sortProductsByCategory( productsCollection:ArrayCollection, filter:Function ):ArrayCollection
 			{
 				productsCollection.filterFunction = filter;
-				categoryCollection = new PhoneCategoryVO(categoryName, productsCollection);
 				productsCollection.refresh();
 				
-				Alert.show('' + productsCollection);
+				return productsCollection;
 			}
 			
-			
 			//-------------------------------------------------------------------
+			
+			private var filteredNCategory:PhoneCategoryVO;
+			private var filtered3Category:PhoneCategoryVO;
+			private var filtered6Category:PhoneCategoryVO;
+			private var filtered7Category:PhoneCategoryVO;
+			private var filtered9Category:PhoneCategoryVO;
+			
+			[Bindable]
+			public var phoneCategories:ArrayCollection = new ArrayCollection();
+			
+			private function sortProducts( products:Array ):void
+			{
+				var productsNCollection:ArrayCollection = new ArrayCollection( products );
+				var products3Collection:ArrayCollection = new ArrayCollection( products );
+				var products6Collection:ArrayCollection = new ArrayCollection( products );
+				var products7Collection:ArrayCollection = new ArrayCollection( products );
+				var products9Collection:ArrayCollection = new ArrayCollection( products );
+				
+				var filteredNProducts:ArrayCollection = sortProductsByCategory( productsNCollection, filterN );
+				var filtered3Products:ArrayCollection = sortProductsByCategory( products3Collection, filter3 );
+				var filtered6Products:ArrayCollection = sortProductsByCategory( products6Collection, filter6 );
+				var filtered7Products:ArrayCollection = sortProductsByCategory( products7Collection, filter7 );
+				var filtered9Products:ArrayCollection = sortProductsByCategory( products9Collection, filter9 );
+				
+				filteredNCategory = new PhoneCategoryVO( NOKIA_N, filteredNProducts );
+				filtered3Category = new PhoneCategoryVO( NOKIA_3000, filtered3Products );
+				filtered6Category = new PhoneCategoryVO( NOKIA_6000, filtered6Products );
+				filtered7Category = new PhoneCategoryVO( NOKIA_7000, filtered7Products );
+				filtered9Category = new PhoneCategoryVO( NOKIA_9000, filtered9Products );
+				
+				phoneCategories.addItem(filteredNCategory);
+				phoneCategories.addItem(filtered3Category); 
+				phoneCategories.addItem(filtered6Category); 
+				phoneCategories.addItem(filtered7Category); 
+				phoneCategories.addItem(filtered9Category); 
+			}
 			
 			private function parseXML( catalogXML:XML ):Array 
 			{
@@ -106,29 +140,12 @@
 				return products;
 			}
 			
-			private function sortProducts( products:Array ):void
-			{
-				var productsNCollection:ArrayCollection = new ArrayCollection(products);
-				var products3Collection:ArrayCollection = new ArrayCollection(products);
-				var products6Collection:ArrayCollection = new ArrayCollection(products);
-				var products7Collection:ArrayCollection = new ArrayCollection(products);
-				var products9Collection:ArrayCollection = new ArrayCollection(products);
-				
-				sortProductsByCategory(productsNCollection, filterN, nokiaNCategory, NOKIA_N);
-				sortProductsByCategory(products3Collection, filter3, nokia3Category, NOKIA_3000);
-				sortProductsByCategory(products6Collection, filter6, nokia6Category, NOKIA_6000);
-				sortProductsByCategory(products7Collection, filter7, nokia7Category, NOKIA_7000);
-				sortProductsByCategory(products9Collection, filter9, nokia9Category, NOKIA_9000);
-			}
-			
-			
 			private function handle_xmlLoaderComplete(e:Event):void 
 			{
 				catalogXML = XML(e.target.data);
 				var products:Array = parseXML(catalogXML);
 				sortProducts(products);
 			}
-			
 			
 			protected function application1_initializeHandler(event:FlexEvent):void
 			{
@@ -137,9 +154,108 @@
 				xmlLoader.addEventListener(Event.COMPLETE, handle_xmlLoaderComplete);
 				xmlLoader.load(new URLRequest(DP_DATA_URL));
 			}
+			
+			protected function sortButton_clickHandler(event:MouseEvent):void
+			{
+				
+			}
+			
+			protected function eventsGrid_changeHandler(event:ListEvent):void
+			{
+				
+			}
+			
 		]]>
 
-		
 	</mx:Script>
 	
+	<mx:VBox>
+		
+		<mx:Button 
+			label="Sort"
+			click="sortButton_clickHandler(event)"
+			/>
+		
+		<mx:AdvancedDataGrid
+			id="eventsGrid"
+			dataProvider="{phoneCategories.getItemAt(1).children}"
+			change="eventsGrid_changeHandler(event)"
+			height="250"
+			>
+			
+			<mx:columns>
+				
+				<mx:AdvancedDataGridColumn
+					headerText="Name"
+					width="100"
+					textAlign="center"
+					dataField="name"
+					/>
+				
+				<mx:AdvancedDataGridColumn
+					headerText="Description"
+					width="150"
+					textAlign="center"
+					dataField="description"
+					/>
+				
+				<mx:AdvancedDataGridColumn 
+					headerText="Price"
+					width="80"
+					textAlign="center"
+					dataField="price"
+					/>
+				
+				<mx:AdvancedDataGridColumn
+					headerText="Image"
+					width="100"
+					textAlign="center"
+					dataField="image"
+					/>
+				
+				<mx:AdvancedDataGridColumn
+					headerText="Series"
+					width="100"
+					textAlign="center"
+					dataField="series"
+					/>
+				
+				<mx:AdvancedDataGridColumn
+					headerText="Triband"
+					width="100"
+					textAlign="center"
+					dataField="triband"
+					/>
+				
+				<mx:AdvancedDataGridColumn 
+					headerText="Camera"
+					width="100"
+					textAlign="center"
+					dataField="camera"
+					/>
+				
+				<mx:AdvancedDataGridColumn
+					headerText="Video"
+					width="100"
+					textAlign="center"
+					dataField="video"
+					/>
+				
+				<mx:AdvancedDataGridColumn
+					headerText="Highlight1"
+					width="100"
+					textAlign="center"
+					dataField="highlight1"
+					/>
+				
+				<mx:AdvancedDataGridColumn
+					headerText="Highlight2"
+					width="100"
+					textAlign="center"
+					dataField="highlight2"
+					/>
+				
+			</mx:columns>
+		</mx:AdvancedDataGrid>
+	</mx:VBox>
 </mx:Application>
