@@ -65,69 +65,18 @@
 				return testRegex(/[a-zA-Z]{5}\s(9)/, product.name);
 			}
 			
+			
 			//-------------------------------------------------------------------
 				
-			// Nokia N Sort only for now
-			private function sortProductsByCategory( productsCollection:ArrayCollection ):void
+			private function sortProductsByCategory( productsCollection:ArrayCollection, filter:Function, categoryCollection:PhoneCategoryVO, categoryName:String ):void
 			{
-					productsCollection.filterFunction = filterN;
-					nokiaNCategory = new PhoneCategoryVO(NOKIA_N, productsCollection);
-					productsCollection.refresh();
+				productsCollection.filterFunction = filter;
+				categoryCollection = new PhoneCategoryVO(categoryName, productsCollection);
+				productsCollection.refresh();
 				
 				Alert.show('' + productsCollection);
 			}
 			
-			// sort 3 only 			
-			private function sortProductsBy3( productsCollection:ArrayCollection ):void
-			{
-				for each(var product:ProductVO in productsCollection)
-				{
-					productsCollection.filterFunction = filter3;
-					nokia3Category = new PhoneCategoryVO(NOKIA_3000, productsCollection);
-					productsCollection.refresh();
-				}
-				
-				Alert.show('' + productsCollection);
-			}
-			
-			// sort 6 only 			
-			private function sortProductsBy6( productsCollection:ArrayCollection ):void
-			{
-				for each(var product:ProductVO in productsCollection)
-				{
-					productsCollection.filterFunction = filter6;
-					nokia6Category = new PhoneCategoryVO(NOKIA_6000, productsCollection);
-					productsCollection.refresh();
-				}
-				
-				Alert.show('' + productsCollection);
-			}
-			
-			// sort 7 only 			
-			private function sortProductsBy7( productsCollection:ArrayCollection ):void
-			{
-				for each(var product:ProductVO in productsCollection)
-				{
-					productsCollection.filterFunction = filter7;
-					nokia7Category = new PhoneCategoryVO(NOKIA_7000, productsCollection);
-					productsCollection.refresh();
-				}
-				
-				Alert.show('' + productsCollection);
-			}
-			
-			// sort 9 only 			
-			private function sortProductsBy9( productsCollection:ArrayCollection ):void
-			{
-				for each(var product:ProductVO in productsCollection)
-				{
-					productsCollection.filterFunction = filter9;
-					nokia9Category = new PhoneCategoryVO(NOKIA_9000, productsCollection);
-					productsCollection.refresh();
-				}
-				
-				Alert.show('' + productsCollection);
-			}
 			
 			//-------------------------------------------------------------------
 			
@@ -157,24 +106,27 @@
 				return products;
 			}
 			
-			
-			
-			private function handle_xmlLoaderComplete(e:Event):void 
+			private function sortProducts( products:Array ):void
 			{
-				catalogXML = XML(e.target.data);
-				var products:Array = parseXML(catalogXML);
-				
 				var productsNCollection:ArrayCollection = new ArrayCollection(products);
 				var products3Collection:ArrayCollection = new ArrayCollection(products);
 				var products6Collection:ArrayCollection = new ArrayCollection(products);
 				var products7Collection:ArrayCollection = new ArrayCollection(products);
 				var products9Collection:ArrayCollection = new ArrayCollection(products);
 				
-				sortProductsByCategory(productsNCollection);
-				sortProductsBy3(products3Collection);
-				sortProductsBy6(products6Collection);
-				sortProductsBy7(products7Collection);
-				sortProductsBy9(products9Collection);
+				sortProductsByCategory(productsNCollection, filterN, nokiaNCategory, NOKIA_N);
+				sortProductsByCategory(products3Collection, filter3, nokia3Category, NOKIA_3000);
+				sortProductsByCategory(products6Collection, filter6, nokia6Category, NOKIA_6000);
+				sortProductsByCategory(products7Collection, filter7, nokia7Category, NOKIA_7000);
+				sortProductsByCategory(products9Collection, filter9, nokia9Category, NOKIA_9000);
+			}
+			
+			
+			private function handle_xmlLoaderComplete(e:Event):void 
+			{
+				catalogXML = XML(e.target.data);
+				var products:Array = parseXML(catalogXML);
+				sortProducts(products);
 			}
 			
 			
