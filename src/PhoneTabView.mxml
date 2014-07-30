@@ -11,8 +11,8 @@
 			<tabs:PhoneDisplay />
 		</mx:VBox>
 		
-		<mx:VBox label="Other Tab">
-			<mx:Label text="testing 123 testing" />
+		<mx:VBox label="Stream Display">
+			<tabs:StreamDisplay />
 		</mx:VBox>
 		
 		

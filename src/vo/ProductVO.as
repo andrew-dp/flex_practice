@@ -1,10 +1,7 @@
 package vo 
 {
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	
-	
-	public class ProductVO extends EventDispatcher 
+	public class ProductVO 
 	{
 
 		private var _productId:int;

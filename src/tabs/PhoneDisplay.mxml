@@ -14,17 +14,21 @@
 			
 			private const DP_DATA_URL:String = "http://digitalprimates.net/flexstore/data/catalog.xml";
 			
-			private const NOKIA_N:String = "Nokia N";
 			private const NOKIA_3000:String = "Nokia 3000";
 			private const NOKIA_6000:String = "Nokia 6000";
 			private const NOKIA_7000:String = "Nokia 7000";
 			private const NOKIA_9000:String = "Nokia 9000";
 			
-			private var nokiaNCategory:PhoneCategoryVO;
 			private var nokia3Category:PhoneCategoryVO;
 			private var nokia6Category:PhoneCategoryVO;
 			private var nokia7Category:PhoneCategoryVO;
 			private var nokia9Category:PhoneCategoryVO;
+			
+			[Bindable]
+			private var products:Array;
+			
+			[Bindable]
+			public var phoneCategories:ArrayCollection;
 			
 			private var xmlLoader:URLLoader;
 			private var catalogXML:XML;
@@ -57,13 +61,9 @@
 			{
 				productsCollection.filterFunction = filter;
 				productsCollection.refresh();
-				
 			}
 			
 			//-------------------------------------------------------------------
-			
-			[Bindable]
-			public var phoneCategories:ArrayCollection;
 			
 			private function sortProducts( products:Array ):void
 			{
@@ -89,9 +89,6 @@
 				phoneCategories.addItem( filtered7Category ); 
 				phoneCategories.addItem( filtered9Category ); 
 			}
-			
-			[Bindable]
-			private var products:Array;
 			
 			private function parseXML( catalogXML:XML ):Array 
 			{
