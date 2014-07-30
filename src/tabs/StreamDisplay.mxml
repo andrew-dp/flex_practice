@@ -7,10 +7,14 @@
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
 			
-			import vo.StreamCategoryVO;
+			import vo.CategoryVO;
 			import vo.StreamVO;
 			
 			private const DP_SOURCES_URL:String = "http://digitalprimates.net/dash/streams/sources.xml";
+			
+			private const DASH_CATEGORY:String = "dash";
+			private const DEMO_UNIFIED_CATEGORY:String = "demoUnified";
+			private const DP_CATEGORY:String = "digitalPrimates";
 			
 			private var xmlLoader:URLLoader;
 			private var sourcesXML:XML;
@@ -20,7 +24,6 @@
 			
 			[Bindable]
 			private var streamCategories:ArrayCollection;
-			
 			
 			//-------------------------------------------------------------------
 			
@@ -33,17 +36,17 @@
 			
 			private function dashFilter( source:StreamVO ):Boolean
 			{
-				return testRegex(/(edgesuite)/, source.url);
+				return testRegex(/(dash.edgesuite)/, source.url);
 			}
 			
 			private function demoUnifiedFilter( source:StreamVO ):Boolean
 			{
-				return testRegex(/(streaming)/, source.url);
+				return testRegex(/(unified-streaming)/, source.url);
 			}
 			
 			private function digitalPrimatesFilter( source:StreamVO ):Boolean
 			{
-				return testRegex(/(digitalprimates)/, source.url);
+				return testRegex(/(digitalprimates.net)/, source.url);
 			}
 			
 			//-------------------------------------------------------------------
@@ -56,7 +59,6 @@
 			
 			//-------------------------------------------------------------------
 			
-			
 			private function sortSources( sources:Array ):void
 			{
 				var dashCollection:ArrayCollection = new ArrayCollection( sources );
@@ -67,9 +69,9 @@
 				sortProductsByCategory( unifiedCollection, demoUnifiedFilter );
 				sortProductsByCategory( digitalPrimatesCollection, digitalPrimatesFilter );
 				
-				var dashCategory:StreamCategoryVO = new StreamCategoryVO( "dash", dashCollection );
-				var unifiedCategory:StreamCategoryVO = new StreamCategoryVO("demoUnified", unifiedCollection );
-				var digitalPrimatesCategory:StreamCategoryVO = new StreamCategoryVO("digitalPrimates", digitalPrimatesCollection);
+				var dashCategory:CategoryVO = new CategoryVO( DASH_CATEGORY, dashCollection );
+				var unifiedCategory:CategoryVO = new CategoryVO( DEMO_UNIFIED_CATEGORY, unifiedCollection );
+				var digitalPrimatesCategory:CategoryVO = new CategoryVO( DP_CATEGORY, digitalPrimatesCollection );
 				
 				streamCategories = new ArrayCollection();
 				

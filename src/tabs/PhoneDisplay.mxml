@@ -9,7 +9,7 @@
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
 			
-			import vo.PhoneCategoryVO;
+			import vo.CategoryVO;
 			import vo.ProductVO;
 			
 			private const DP_DATA_URL:String = "http://digitalprimates.net/flexstore/data/catalog.xml";
@@ -18,11 +18,6 @@
 			private const NOKIA_6000:String = "Nokia 6000";
 			private const NOKIA_7000:String = "Nokia 7000";
 			private const NOKIA_9000:String = "Nokia 9000";
-			
-			private var nokia3Category:PhoneCategoryVO;
-			private var nokia6Category:PhoneCategoryVO;
-			private var nokia7Category:PhoneCategoryVO;
-			private var nokia9Category:PhoneCategoryVO;
 			
 			[Bindable]
 			private var products:Array;
@@ -77,10 +72,10 @@
 				sortProductsByCategory( products7Collection, filter7 );
 				sortProductsByCategory( products9Collection, filter9 );
 				
-				var filtered3Category:PhoneCategoryVO = new PhoneCategoryVO( NOKIA_3000, products3Collection );
-				var filtered6Category:PhoneCategoryVO = new PhoneCategoryVO( NOKIA_6000, products6Collection );
-				var filtered7Category:PhoneCategoryVO = new PhoneCategoryVO( NOKIA_7000, products7Collection );
-				var filtered9Category:PhoneCategoryVO = new PhoneCategoryVO( NOKIA_9000, products9Collection );
+				var filtered3Category:CategoryVO = new CategoryVO( NOKIA_3000, products3Collection );
+				var filtered6Category:CategoryVO = new CategoryVO( NOKIA_6000, products6Collection );
+				var filtered7Category:CategoryVO = new CategoryVO( NOKIA_7000, products7Collection );
+				var filtered9Category:CategoryVO = new CategoryVO( NOKIA_9000, products9Collection );
 				
 				phoneCategories = new ArrayCollection();
 				

@@ -15,7 +15,6 @@
 			<tabs:StreamDisplay />
 		</mx:VBox>
 		
-		
 	</mx:TabNavigator>
 	
 </mx:Application>
