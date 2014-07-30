@@ -9,6 +9,7 @@
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
+			import mx.events.CollectionEvent;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
 			
@@ -68,24 +69,18 @@
 			
 			//-------------------------------------------------------------------
 				
-			private function sortProductsByCategory( productsCollection:ArrayCollection, filter:Function ):ArrayCollection
+			private function sortProductsByCategory( productsCollection:ArrayCollection, filter:Function ):void
 			{
 				productsCollection.filterFunction = filter;
 				productsCollection.refresh();
 				
-				return productsCollection;
 			}
 			
 			//-------------------------------------------------------------------
 			
-			private var filteredNCategory:PhoneCategoryVO;
-			private var filtered3Category:PhoneCategoryVO;
-			private var filtered6Category:PhoneCategoryVO;
-			private var filtered7Category:PhoneCategoryVO;
-			private var filtered9Category:PhoneCategoryVO;
 			
 			[Bindable]
-			public var phoneCategories:ArrayCollection = new ArrayCollection();
+			public var phoneCategories:ArrayCollection;
 			
 			private function sortProducts( products:Array ):void
 			{
@@ -95,17 +90,19 @@
 				var products7Collection:ArrayCollection = new ArrayCollection( products );
 				var products9Collection:ArrayCollection = new ArrayCollection( products );
 				
-				var filteredNProducts:ArrayCollection = sortProductsByCategory( productsNCollection, filterN );
-				var filtered3Products:ArrayCollection = sortProductsByCategory( products3Collection, filter3 );
-				var filtered6Products:ArrayCollection = sortProductsByCategory( products6Collection, filter6 );
-				var filtered7Products:ArrayCollection = sortProductsByCategory( products7Collection, filter7 );
-				var filtered9Products:ArrayCollection = sortProductsByCategory( products9Collection, filter9 );
+				sortProductsByCategory( productsNCollection, filterN );
+				sortProductsByCategory( products3Collection, filter3 );
+				sortProductsByCategory( products6Collection, filter6 );
+				sortProductsByCategory( products7Collection, filter7 );
+				sortProductsByCategory( products9Collection, filter9 );
 				
-				filteredNCategory = new PhoneCategoryVO( NOKIA_N, filteredNProducts );
-				filtered3Category = new PhoneCategoryVO( NOKIA_3000, filtered3Products );
-				filtered6Category = new PhoneCategoryVO( NOKIA_6000, filtered6Products );
-				filtered7Category = new PhoneCategoryVO( NOKIA_7000, filtered7Products );
-				filtered9Category = new PhoneCategoryVO( NOKIA_9000, filtered9Products );
+				var filteredNCategory:PhoneCategoryVO = new PhoneCategoryVO( NOKIA_N, productsNCollection );
+				var filtered3Category:PhoneCategoryVO = new PhoneCategoryVO( NOKIA_3000, products3Collection );
+				var filtered6Category:PhoneCategoryVO = new PhoneCategoryVO( NOKIA_6000, products6Collection );
+				var filtered7Category:PhoneCategoryVO = new PhoneCategoryVO( NOKIA_7000, products7Collection );
+				var filtered9Category:PhoneCategoryVO = new PhoneCategoryVO( NOKIA_9000, products9Collection );
+				
+				phoneCategories = new ArrayCollection();
 				
 				phoneCategories.addItem( filteredNCategory );
 				phoneCategories.addItem( filtered3Category ); 
@@ -140,6 +137,7 @@
 				return products;
 			}
 			
+			
 			private function handle_xmlLoaderComplete(e:Event):void 
 			{
 				catalogXML = XML(e.target.data);
@@ -154,46 +152,48 @@
 				xmlLoader.addEventListener(Event.COMPLETE, handle_xmlLoaderComplete);
 				xmlLoader.load(new URLRequest(DP_DATA_URL));
 			}
-			
-			[Bindable]
-			private var selectedCategory:ArrayCollection;
-			
-			protected function sortButton_clickHandler(event:MouseEvent):void
-			{
-//				selectedCategory = this.selectedItem.data;
-			}
-	
 		]]>
 	
 	</mx:Script>
 	
+	<!--<mx:ComboBox 
+		id="sortingBox" 
+		dataProvider="{phoneCategories}"
+		labelField="name"
+		/>
+	
+	<mx:AdvancedDataGrid
+		id="eventsGrid"
+		dataProvider="{sortingBox.selectedItem.children}"
+		height="650"
+		>-->
+	
 	<mx:VBox>
-		
-		<mx:ComboBox 
-			id="sortingBox" 
-			dataProvider="{phoneCategories}"
-			labelField="name"
-			click="sortButton_clickHandler(event)"
-			/>
 		
 		<mx:AdvancedDataGrid
 			id="eventsGrid"
-			dataProvider="{sortingBox.selectedItem.children}"
-			height="250"
+			height="650"
+			displayItemsExpanded="false"
 			>
+			
+			<mx:dataProvider>
+				<mx:HierarchicalData source="{phoneCategories}" />
+			</mx:dataProvider>
 			
 			<mx:columns>
 				
 				<mx:AdvancedDataGridColumn
 					headerText="Name"
-					width="100"
+					width="220"
 					textAlign="center"
 					dataField="name"
+					wordWrap="true"
 					/>
 				
 				<mx:AdvancedDataGridColumn
 					headerText="Description"
-					width="150"
+					width="200"
+					wordWrap="true"
 					textAlign="center"
 					dataField="description"
 					/>
@@ -203,6 +203,7 @@
 					width="80"
 					textAlign="center"
 					dataField="price"
+					wordWrap="true"
 					/>
 				
 				<mx:AdvancedDataGridColumn
@@ -210,6 +211,7 @@
 					width="100"
 					textAlign="center"
 					dataField="image"
+					wordWrap="true"
 					/>
 				
 				<mx:AdvancedDataGridColumn
@@ -217,6 +219,7 @@
 					width="100"
 					textAlign="center"
 					dataField="series"
+					wordWrap="true"
 					/>
 				
 				<mx:AdvancedDataGridColumn
@@ -245,6 +248,7 @@
 					width="100"
 					textAlign="center"
 					dataField="highlight1"
+					wordWrap="true"
 					/>
 				
 				<mx:AdvancedDataGridColumn
@@ -252,6 +256,7 @@
 					width="100"
 					textAlign="center"
 					dataField="highlight2"
+					wordWrap="true"
 					/>
 				
 			</mx:columns>
