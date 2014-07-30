@@ -14,7 +14,7 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="RoundArchTraining.mxml"/>
+    <application path="PhoneTabView.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
