@@ -143,7 +143,6 @@
 			</mx:GroupingCollection>
 		</mx:dataProvider>
 		
-		
 		<mx:columns>
 			<mx:AdvancedDataGridColumn
 				headerText="Name"
@@ -169,7 +168,5 @@
 	
 			</mx:columns>
 		</mx:AdvancedDataGrid>
-		
 	</mx:HBox>
-
 </mx:Canvas>
