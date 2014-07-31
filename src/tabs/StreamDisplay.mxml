@@ -12,9 +12,9 @@
 			
 			private const DP_SOURCES_URL:String = "http://digitalprimates.net/dash/streams/sources.xml";
 			
-			private const DASH_CATEGORY:String = "dash";
-			private const DEMO_UNIFIED_CATEGORY:String = "demoUnified";
-			private const DP_CATEGORY:String = "digitalPrimates";
+			private const DASH_EDGESUITE_URL:String = "dash.edgesuite.net";
+			private const DEMO_UNIFIED_STREAMING_URL:String = "demo.unified-streaming.com";
+			private const DIGITAL_PRIMATES_URL:String = "www.digitalprimates.net";
 			
 			private var xmlLoader:URLLoader;
 			private var sourcesXML:XML;
@@ -69,15 +69,35 @@
 				sortProductsByCategory( unifiedCollection, demoUnifiedFilter );
 				sortProductsByCategory( digitalPrimatesCollection, digitalPrimatesFilter );
 				
-				var dashCategory:CategoryVO = new CategoryVO( DASH_CATEGORY, dashCollection );
-				var unifiedCategory:CategoryVO = new CategoryVO( DEMO_UNIFIED_CATEGORY, unifiedCollection );
-				var digitalPrimatesCategory:CategoryVO = new CategoryVO( DP_CATEGORY, digitalPrimatesCollection );
+				var dashCategory:CategoryVO = new CategoryVO( DASH_EDGESUITE_URL, dashCollection );
+				var unifiedCategory:CategoryVO = new CategoryVO( DEMO_UNIFIED_STREAMING_URL, unifiedCollection );
+				var digitalPrimatesCategory:CategoryVO = new CategoryVO( DIGITAL_PRIMATES_URL, digitalPrimatesCollection );
 				
 				streamCategories = new ArrayCollection();
 				
 				streamCategories.addItem( dashCategory );
 				streamCategories.addItem( unifiedCategory );
 				streamCategories.addItem( digitalPrimatesCategory );
+			}
+			
+			private function getStreamName( url:String ):String
+			{
+				var stream:String;
+				
+				if ( testRegex(/(dash.edgesuite)/, url) )
+				{
+					stream =  DASH_EDGESUITE_URL;
+				} 
+				else if ( testRegex(/(unified-streaming)/, url) )
+				{
+					stream = DEMO_UNIFIED_STREAMING_URL;
+				}
+				else if ( testRegex(/(digitalprimates.net)/, url) )
+				{
+					stream = DIGITAL_PRIMATES_URL;
+				}
+				
+				return stream;
 			}
 			
 			
@@ -89,9 +109,10 @@
 				{
 					var name:String = itemXML[0].name;
 					var url:String = itemXML[0].url;
+					var streamName:String = getStreamName( url );
 					var live:Boolean = itemXML[0].live;
 					
-					var item:StreamVO = new StreamVO( name, url, live );
+					var item:StreamVO = new StreamVO( name, streamName, url, live );
 					
 					sources.push(item);
 				}
@@ -139,7 +160,7 @@
 			<mx:GroupingCollection id="gc" source="{sources}" >
 				<mx:grouping>
 					<mx:Grouping>
-						<mx:GroupingField name="name"/>
+						<mx:GroupingField name="streamName"/>
 					</mx:Grouping>
 				</mx:grouping>
 			</mx:GroupingCollection>

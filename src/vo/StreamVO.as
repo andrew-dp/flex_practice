@@ -4,6 +4,7 @@ package vo
 	public class StreamVO 
 	{
 		
+		
 		//-------------------------------------------------------------------
 		
 		private var _name:String;
@@ -17,6 +18,21 @@ package vo
 		{
 			_name = value;
 		}
+		
+		//-------------------------------------------------------------------
+		
+		private var _streamName:String;
+		
+		public function get streamName():String
+		{
+			return _streamName;
+		}
+		
+		public function set streamName(value:String):void
+		{
+			_streamName = value;
+		}
+		
 		
 		//-------------------------------------------------------------------
 		
@@ -55,9 +71,10 @@ package vo
 		 * @param live
 		 * 
 		 */
-		public function StreamVO( name:String, url:String, live:Boolean ) 
+		public function StreamVO( name:String, streamName:String, url:String, live:Boolean ) 
 		{
-			this.name = name
+			this.name = name;
+			this.streamName = streamName;
 			this.url = url;
 			this.live = live;
 		}
