@@ -3,7 +3,7 @@
 				xmlns:tabs="tabs.*"
 				layout="absolute" 
 				minWidth="955" 
-				minHeight="600">
+				minHeight="600" xmlns:components="components.*">
 	
 	<mx:TabNavigator>
 		
@@ -13,6 +13,10 @@
 		
 		<mx:VBox label="Stream Display">
 			<tabs:StreamDisplay />
+		</mx:VBox>
+		
+		<mx:VBox label="PhoneBase Display">
+			<components:PhoneSkin />
 		</mx:VBox>
 		
 	</mx:TabNavigator>
