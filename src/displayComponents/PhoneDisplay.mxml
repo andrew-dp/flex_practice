@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<components:PhoneBase xmlns:mx="http://www.adobe.com/2006/mxml" 
-						 xmlns:components="components.*"
-						 initialize="phoneSkinInitializer(event)">
+<components:Phone xmlns:mx="http://www.adobe.com/2006/mxml" 
+					  xmlns:components="components.*"
+					  initialize="phoneSkinInitializer(event)"
+					  >
 	<mx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
 			
 			protected function phoneSkinInitializer(event:FlexEvent):void
 			{
-				phoneBaseInitializer( event );
+				sourceBaseInitializer( event );
 			}
 			
 		]]>
@@ -29,7 +30,7 @@
 			>
 			
 			<mx:dataProvider>
-				<mx:GroupingCollection id="gc" source="{products}" >
+				<mx:GroupingCollection id="gc" source="{nodeItems}" >
 					<mx:grouping>
 						<mx:Grouping>
 							<mx:GroupingField name="series"/>
@@ -110,4 +111,4 @@
 			</mx:columns>
 		</mx:AdvancedDataGrid>
 	</mx:HBox>
-</components:PhoneBase>
+</components:Phone>

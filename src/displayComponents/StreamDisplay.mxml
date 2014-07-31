@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<components:StreamBase xmlns:mx="http://www.adobe.com/2006/mxml" 
+<components:Stream xmlns:mx="http://www.adobe.com/2006/mxml" 
 					   xmlns:components="components.*"
-					   initialize="streamSkinInitializer(event)">
+					   initialize="streamSkinInitializer(event)"
+					   >
 	<mx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
 			
 			protected function streamSkinInitializer(event:FlexEvent):void
 			{
-				streamBaseInitializer( event );
+				sourceBaseInitializer( event );
 			}
 			
 		]]>
@@ -29,7 +30,7 @@
 			>
 			
 			<mx:dataProvider>
-				<mx:GroupingCollection id="gc" source="{sources}" >
+				<mx:GroupingCollection id="gc" source="{nodeItems}" >
 					<mx:grouping>
 						<mx:Grouping>
 							<mx:GroupingField name="streamName"/>
@@ -65,4 +66,4 @@
 		</mx:AdvancedDataGrid>
 	</mx:HBox>
 	
-</components:StreamBase>
+</components:Stream>

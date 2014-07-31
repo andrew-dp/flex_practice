@@ -3,16 +3,34 @@
 				xmlns:tabs="tabs.*"
 				layout="absolute" 
 				minWidth="955" 
-				minHeight="600" xmlns:components="components.*">
+				minHeight="600" 
+				xmlns:components="components.*" 
+				xmlns:displayComponents="displayComponents.*">
+	
+	<mx:Script>
+		<![CDATA[
+			protected function streamTab_clickHandler(event:MouseEvent):void
+			{
+				streamDisplay.createComponentsFromDescriptors();
+			}
+			
+			protected function phoneTab_clickHandler(event:MouseEvent):void
+			{
+				phoneDisplay.createComponentsFromDescriptors();				
+			}
+			
+		]]>
+	</mx:Script>
+	
 	
 	<mx:TabNavigator>
 		
-		<mx:VBox label="Phone Display">
-			<components:PhoneDisplay />
+		<mx:VBox  label="Phone Display" click="phoneTab_clickHandler(event)" id="phoneDisplay" creationPolicy="none">
+			<displayComponents:PhoneDisplay/>
 		</mx:VBox>
 		
-		<mx:VBox label="Stream Display">
-			<components:StreamDisplay />
+		<mx:VBox label="Stream Display" click="streamTab_clickHandler(event)" id="streamDisplay" creationPolicy="none">
+			<displayComponents:StreamDisplay />
 		</mx:VBox>
 		
 	</mx:TabNavigator>

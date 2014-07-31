@@ -1,23 +1,13 @@
 package components
 {
-	import flash.events.Event;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
+	import mx.collections.ArrayCollection;
 	
-	import mx.collections.GroupingCollection;
-	import mx.containers.Canvas;
-	
-	public class PhoneBase extends Canvas
+	import vo.CategoryVO;
+
+	public class Phone extends XMLLoading
 	{
-		import mx.collections.ArrayCollection;
-		import mx.events.FlexEvent;
-		
-		import vo.CategoryVO;
 		import vo.ProductVO;
-		
-		[Bindable]
-		public var gc:GroupingCollection;
-		
+
 		private const DP_DATA_URL:String = "http://digitalprimates.net/flexstore/data/catalog.xml";
 		
 		private const NOKIA_3000:String = "Nokia 3000";
@@ -26,13 +16,7 @@ package components
 		private const NOKIA_9000:String = "Nokia 9000";
 		
 		[Bindable]
-		protected var products:Array;
-		
-		[Bindable]
 		protected var phoneCategories:ArrayCollection;
-		
-		private var xmlLoader:URLLoader;
-		private var catalogXML:XML;
 		
 		//-------------------------------------------------------------------
 		
@@ -56,22 +40,20 @@ package components
 			return ( product.series.toString() == "9000" );
 		}
 		
-		//-------------------------------------------------------------------
-		
-		private function sortProductsByCategory( productsCollection:ArrayCollection, filter:Function ):void
+		override public function get url():String
 		{
-			productsCollection.filterFunction = filter;
-			productsCollection.refresh();
+			var url:String = DP_DATA_URL;
+			return url;
 		}
 		
 		//-------------------------------------------------------------------
 		
-		private function sortProducts( products:Array ):void
+		override protected function sortXML( xmlNodes:Array ):void
 		{
-			var products3Collection:ArrayCollection = new ArrayCollection( products );
-			var products6Collection:ArrayCollection = new ArrayCollection( products );
-			var products7Collection:ArrayCollection = new ArrayCollection( products );
-			var products9Collection:ArrayCollection = new ArrayCollection( products );
+			var products3Collection:ArrayCollection = new ArrayCollection( xmlNodes );
+			var products6Collection:ArrayCollection = new ArrayCollection( xmlNodes );
+			var products7Collection:ArrayCollection = new ArrayCollection( xmlNodes );
+			var products9Collection:ArrayCollection = new ArrayCollection( xmlNodes );
 			
 			sortProductsByCategory( products3Collection, filter3 );
 			sortProductsByCategory( products6Collection, filter6 );
@@ -91,11 +73,11 @@ package components
 			phoneCategories.addItem( filtered9Category ); 
 		}
 		
-		private function parseXML( catalogXML:XML ):Array 
+		override protected function parseXML( xmlNodes:XML ):Array 
 		{
-			products = new Array();
+			nodeItems = new Array();
 			
-			for each( var productXML:XML in catalogXML.product ) 
+			for each( var productXML:XML in xmlNodes.product ) 
 			{
 				var productId:int = productXML[0].@productId;
 				var name:String = productXML[0].name;
@@ -111,32 +93,12 @@ package components
 				
 				var product:ProductVO = new ProductVO( productId, name, description, price, image, series, triband, camera, video, highlight1, highlight2 );
 				
-				products.push(product);
+				nodeItems.push(product);
 			}
-			
-			return products;
+			return nodeItems;
 		}
-		
-		private function handle_xmlLoaderComplete(e:Event):void 
-		{
-			catalogXML = XML(e.target.data);
-			products = new Array();
-			products = parseXML(catalogXML);
-			
-			sortProducts(products);
-			
-			gc.refresh();
-		}
-		
-		protected function phoneBaseInitializer(event:FlexEvent):void
-		{
-			xmlLoader = new URLLoader();
-			xmlLoader.addEventListener(Event.COMPLETE, handle_xmlLoaderComplete);
-			xmlLoader.load(new URLRequest(DP_DATA_URL));
-		}
-		
-		
-		public function PhoneBase()
+
+		public function Phone()
 		{
 			super();
 		}
