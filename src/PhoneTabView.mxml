@@ -8,15 +8,11 @@
 	<mx:TabNavigator>
 		
 		<mx:VBox label="Phone Display">
-			<tabs:PhoneDisplay />
+			<components:PhoneDisplay />
 		</mx:VBox>
 		
 		<mx:VBox label="Stream Display">
-			<tabs:StreamDisplay />
-		</mx:VBox>
-		
-		<mx:VBox label="PhoneBase Display">
-			<components:PhoneSkin />
+			<components:StreamDisplay />
 		</mx:VBox>
 		
 	</mx:TabNavigator>

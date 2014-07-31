@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:StreamBase xmlns:mx="http://www.adobe.com/2006/mxml" 
+					   xmlns:components="components.*"
+					   initialize="streamSkinInitializer(event)">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			protected function streamSkinInitializer(event:FlexEvent):void
+			{
+				streamBaseInitializer( event );
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:HBox>
+		
+		<mx:Tree id="myTree" 
+				 width="250" 
+				 height="100%" 
+				 dataProvider="{streamCategories}"
+				 labelField="name"
+				 />
+		
+		<mx:AdvancedDataGrid
+			id="eventsGrid"
+			height="650"
+			>
+			
+			<mx:dataProvider>
+				<mx:GroupingCollection id="gc" source="{sources}" >
+					<mx:grouping>
+						<mx:Grouping>
+							<mx:GroupingField name="streamName"/>
+						</mx:Grouping>
+					</mx:grouping>
+				</mx:GroupingCollection>
+			</mx:dataProvider>
+			
+			<mx:columns>
+				<mx:AdvancedDataGridColumn
+					headerText="Name"
+					dataField="name"
+					width="250"
+					wordWrap="true"
+					/>
+				
+				<mx:AdvancedDataGridColumn
+					headerText="URL"
+					width="400"
+					wordWrap="true"
+					textAlign="center"
+					dataField="url"
+					/>
+				
+				<mx:AdvancedDataGridColumn 
+					headerText="Live"
+					textAlign="center"
+					dataField="live"
+					wordWrap="true"
+					/>
+				
+			</mx:columns>
+		</mx:AdvancedDataGrid>
+	</mx:HBox>
+	
+</components:StreamBase>

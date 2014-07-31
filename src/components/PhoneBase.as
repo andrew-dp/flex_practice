@@ -9,7 +9,6 @@ package components
 	
 	public class PhoneBase extends Canvas
 	{
-		
 		import mx.collections.ArrayCollection;
 		import mx.events.FlexEvent;
 		
