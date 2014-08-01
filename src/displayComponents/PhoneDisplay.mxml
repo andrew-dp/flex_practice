@@ -5,20 +5,123 @@
 					  >
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.sliderClasses.Slider;
 			import mx.events.FlexEvent;
+			import mx.events.SliderEvent;
 			
 			protected function phoneSkinInitializer(event:FlexEvent):void
 			{
 //				trace("phone display");
 				sourceBaseInitializer( event );
 			}
+			
+//			------------------------------------- filter funcs ----------------------------
+			
+			protected function changePrice():void
+			{
+				priceMax = priceSlider.value;
+			}
+			
+			protected function tribandCheckbox_changeHandler(event:Event):void
+			{
+				triband = ( tribandCheckbox.selected ) ? true : false;
+			}
+			
+			protected function cameraCheckbox_changeHandler(event:Event):void
+			{
+				camera = ( cameraCheckbox.selected ) ? true : false;	
+			}
+			
+			protected function videoCheckBox_changeHandler(event:Event):void
+			{
+				video = ( videoCheckBox.selected ) ? true : false;
+			}
+			
+			protected function nameTextInput_changeHandler(event:Event):void
+			{
+				nameFilter = nameTextInput.text;
+			}
+			
+			protected function descriptionTextInput_changeHandler(event:Event):void
+			{
+				descriptionFilter = descriptionTextInput.text;
+			}
+			
+			//----------------------------------------------------------------------
+			
+			protected function applyFilters_clickHandler(event:MouseEvent):void
+			{
+				super.applyFilters( priceMax, triband, camera, video, nameFilter, descriptionFilter );
+			}
+			
+			protected function removeFilters_clickHandler(event:MouseEvent):void
+			{
+				super.resetFilters();
+			}
+			
 		]]>
 	</mx:Script>
 	<mx:VBox>
 		
-		<mx:HBox>
-			<mx:Button label="foo"/>
+		<mx:HBox paddingBottom="5" paddingTop="30" paddingLeft="25">
+			
+			<mx:Label
+				text="Name: "
+				/>
+			<mx:TextInput
+				id="nameTextInput"
+				change="nameTextInput_changeHandler(event)"
+				/>
+			<mx:VRule height="20"/>
+			
+			<mx:Label
+				text="Description: "
+				/>
+			<mx:TextInput
+				id="descriptionTextInput"
+				change="descriptionTextInput_changeHandler(event)"
+				/>
+			<mx:VRule height="20"/>
+			
+			<mx:Label
+				text="Price: "
+				/>
+			<mx:HSlider
+				id="priceSlider"
+				minimum="0" maximum="1200"
+				snapInterval="1"
+				liveDragging="false"
+				change="changePrice()"
+				/>
+			<mx:VRule height="20"/>
+			
+			<mx:CheckBox 
+				id="tribandCheckbox" 
+				label="Triband"
+				change="tribandCheckbox_changeHandler(event)"
+				/>
+			<mx:VRule height="20"/>
+			
+			<mx:CheckBox
+				id="cameraCheckbox"
+				label="Camera"
+				change="cameraCheckbox_changeHandler(event)"
+				/>
+			<mx:VRule height="20"/>
+			
+			<mx:CheckBox
+				id="videoCheckBox"
+				label="Video"
+				change="videoCheckBox_changeHandler(event)"
+				/>
+			<mx:VRule height="20"/>
+				
+			<mx:Button label="Apply" click="applyFilters_clickHandler(event)"/>
+			<mx:Button label="Reset" click="removeFilters_clickHandler(event)"/>
 		</mx:HBox>
+
+		
+		
 		
 		<mx:HBox>
 			

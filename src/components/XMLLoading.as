@@ -6,6 +6,7 @@ package components
 	
 	import mx.collections.GroupingCollection;
 	import mx.containers.Canvas;
+	import mx.controls.Alert;
 	
 	
 	public class XMLLoading extends Canvas
@@ -65,6 +66,34 @@ package components
 			xmlLoader.addEventListener(Event.COMPLETE, handle_xmlLoaderComplete);
 			xmlLoader.load(new URLRequest(url));
 		}
+		
+//		-----------------------------------------------------------
+		
+//		protected var filterChange:Boolean = false;
+		
+//		protected var filteredPhones:Array;
+//		
+//		protected var descriptionFilter:String;
+//		protected var nameFilter:String;
+//		protected var video:Boolean = true;
+//		protected var camera:Boolean = true;
+//		protected var triband:Boolean = true;
+//		protected var priceMax:Number;
+//
+//		
+//		protected function applyFilters( priceMax:Number, triband:Boolean, camera:Boolean, video:Boolean, nameFilter:String, descriptionFilter:String ):void
+//		{
+//			trace("vars: " + " " + priceMax+ " " + triband+ " " + camera+ " " + video+ " " + nameFilter+ " " + descriptionFilter);
+//		}
+//		
+//		protected function resetFilters():void
+//		{
+//			filteredPhones = nodeItems;
+//		}
+		
+//		------------------------------------------------------------
+		
+		
 		
 		public function traceOut(event:FlexEvent):void
 		{

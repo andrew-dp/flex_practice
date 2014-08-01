@@ -1,6 +1,7 @@
 package components
 {
 	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
 	import mx.events.FlexEvent;
 	
 	import vo.CategoryVO;
@@ -98,8 +99,83 @@ package components
 				
 				nodeItems.push(product);
 			}
+			
+			filteredPhones = new Array();
+			filteredPhones = nodeItems;
+			
 			return nodeItems;
 		}
+		
+
+		//----------------------------------------------------
+
+		protected var filteredPhones:Array;
+		
+		protected var descriptionFilter:String;
+		protected var nameFilter:String;
+		protected var video:Boolean = true;
+		protected var camera:Boolean = true;
+		protected var triband:Boolean = true;
+		protected var priceMax:Number;
+		
+		
+		protected function testRegex( regex:RegExp, value:String ):Boolean
+		{
+			return new RegExp( regex ).test( value ) ? true : false
+		}
+		
+		//--------------------- FILTERS -----------------------
+		protected function filterPrice( product:ProductVO ):Boolean
+		{
+			return ( product.price <= priceMax );
+		}
+		
+		protected function filterVideo( product:ProductVO ):Boolean
+		{
+			return ( product.video == video );
+		}
+		
+		protected function filterCamera( product:ProductVO ):Boolean
+		{
+			return ( product.camera == camera );
+		}
+		
+		protected function filterTriband( product:ProductVO ):Boolean
+		{
+			return ( product.triband == triband );
+		}
+		
+		protected function filterDescription( product:ProductVO ):Boolean
+		{
+			return ( testRegex(/(descriptionFilter)/, product.description) );
+		}
+		
+		protected function filterName( product:ProductVO ):Boolean
+		{
+			return ( testRegex(/(nameFilter)/, product.name) );
+		}
+
+		//------------ APPLY FILTERS-------------------------------------------
+		
+		protected function applyFilters( priceMax:Number, triband:Boolean, camera:Boolean, video:Boolean, nameFilter:String, descriptionFilter:String ):void
+		{
+			filteredPhones.filter(filterPrice);
+			filteredPhones.filter(filterVideo);
+			filteredPhones.filter(filterCamera);
+			filteredPhones.filter(filterTriband);
+			filteredPhones.filter(filterDescription);
+			filteredPhones.filter(filterName);
+			
+			trace("vars: " + " " + priceMax+ " " + triband+ " " + camera+ " " + video+ " " + nameFilter+ " " + descriptionFilter);
+		}
+		
+		protected function resetFilters():void
+		{
+			filteredPhones = nodeItems;
+		}
+		
+		//----------------------------------------------------
+		
 		
 		private function traceOutPhone(event:FlexEvent):void
 		{
