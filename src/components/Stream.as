@@ -114,13 +114,13 @@ package components
 		
 		private function traceOutStream(event:FlexEvent):void
 		{
-			trace("stream initialized");
+//			trace("stream initialized");
 		}
 
 		public function Stream()
 		{
 			super();
-			this.addEventListener(FlexEvent.INITIALIZE, traceOutStream)
+			this.addEventListener(FlexEvent.INITIALIZE, traceOutStream);
 		}
 	}
 }

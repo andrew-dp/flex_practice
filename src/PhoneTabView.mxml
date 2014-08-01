@@ -8,14 +8,10 @@
 				xmlns:displayComponents="displayComponents.*">
 	
 	<mx:TabNavigator>
+			
+		<displayComponents:PhoneDisplay label="Phone Display"/>
 		
-		<mx:VBox label="Phone Display">
-			<displayComponents:PhoneDisplay/>
-		</mx:VBox>
-		
-		<mx:VBox label="Stream Display">
-			<displayComponents:StreamDisplay />
-		</mx:VBox>
+		<displayComponents:StreamDisplay label="Stream Display" />
 		
 	</mx:TabNavigator>
 	

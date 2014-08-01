@@ -74,7 +74,7 @@ package components
 		public function XMLLoading()
 		{
 			super();
-			this.addEventListener(FlexEvent.INITIALIZE, traceOut);
+			this.addEventListener(FlexEvent.INITIALIZE, sourceBaseInitializer);
 		}
 	}
 }

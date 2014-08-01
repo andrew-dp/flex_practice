@@ -9,106 +9,113 @@
 			
 			protected function phoneSkinInitializer(event:FlexEvent):void
 			{
-				trace("phone display");
+//				trace("phone display");
 				sourceBaseInitializer( event );
 			}
 		]]>
 	</mx:Script>
-	
-	<mx:HBox>
+	<mx:VBox>
 		
-		<mx:Tree id="myTree" 
-				 width="180" 
-				 height="100%" 
-				 dataProvider="{phoneCategories}"
-				 labelField="name"
-				 />
+		<mx:HBox>
+			<mx:Button label="foo"/>
+		</mx:HBox>
 		
-		<mx:AdvancedDataGrid
-			id="eventsGrid"
-			height="650"
-			>
+		<mx:HBox>
 			
-			<mx:dataProvider>
-				<mx:GroupingCollection id="gc" source="{nodeItems}" >
-					<mx:grouping>
-						<mx:Grouping>
-							<mx:GroupingField name="series"/>
-						</mx:Grouping>
-					</mx:grouping>
-				</mx:GroupingCollection>
-			</mx:dataProvider>
+			<mx:Tree id="myTree" 
+					 width="180" 
+					 height="100%" 
+					 dataProvider="{phoneCategories}"
+					 labelField="name"
+					 />
 			
-			<mx:columns>
-				<mx:AdvancedDataGridColumn
-					headerText="Name"
-					dataField="name"
-					width="150"
-					wordWrap="true"
-					/>
+			<mx:AdvancedDataGrid
+				id="eventsGrid"
+				height="650"
+				>
 				
-				<mx:AdvancedDataGridColumn
-					headerText="Description"
-					width="200"
-					wordWrap="true"
-					textAlign="center"
-					dataField="description"
-					/>
+				<mx:dataProvider>
+					<mx:GroupingCollection id="gc" source="{nodeItems}" >
+						<mx:grouping>
+							<mx:Grouping>
+								<mx:GroupingField name="series"/>
+							</mx:Grouping>
+						</mx:grouping>
+					</mx:GroupingCollection>
+				</mx:dataProvider>
 				
-				<mx:AdvancedDataGridColumn 
-					headerText="Price"
-					textAlign="center"
-					dataField="price"
-					wordWrap="true"
-					/>
-				
-				<mx:AdvancedDataGridColumn
-					headerText="Image"
-					textAlign="center"
-					dataField="image"
-					wordWrap="true"
-					/>
-				
-				<mx:AdvancedDataGridColumn
-					headerText="Series"
-					textAlign="center"
-					dataField="series"
-					wordWrap="true"
-					/>
-				
-				<mx:AdvancedDataGridColumn
-					headerText="Triband"
-					textAlign="center"
-					dataField="triband"
-					/>
-				
-				<mx:AdvancedDataGridColumn 
-					headerText="Camera"
-					textAlign="center"
-					dataField="camera"
-					/>
-				
-				<mx:AdvancedDataGridColumn
-					headerText="Video"
-					textAlign="center"
-					dataField="video"
-					/>
-				
-				<mx:AdvancedDataGridColumn
-					headerText="Highlight1"
-					textAlign="center"
-					dataField="highlight1"
-					wordWrap="true"
-					/>
-				
-				<mx:AdvancedDataGridColumn
-					headerText="Highlight2"
-					textAlign="center"
-					dataField="highlight2"
-					wordWrap="true"
-					/>
-				
-			</mx:columns>
-		</mx:AdvancedDataGrid>
-	</mx:HBox>
+				<mx:columns>
+					<mx:AdvancedDataGridColumn
+						headerText="Name"
+						dataField="name"
+						width="150"
+						wordWrap="true"
+						/>
+					
+					<mx:AdvancedDataGridColumn
+						headerText="Description"
+						width="200"
+						wordWrap="true"
+						textAlign="center"
+						dataField="description"
+						/>
+					
+					<mx:AdvancedDataGridColumn 
+						headerText="Price"
+						textAlign="center"
+						dataField="price"
+						wordWrap="true"
+						/>
+					
+					<mx:AdvancedDataGridColumn
+						headerText="Image"
+						textAlign="center"
+						dataField="image"
+						wordWrap="true"
+						/>
+					
+					<mx:AdvancedDataGridColumn
+						headerText="Series"
+						textAlign="center"
+						dataField="series"
+						wordWrap="true"
+						/>
+					
+					<mx:AdvancedDataGridColumn
+						headerText="Triband"
+						textAlign="center"
+						dataField="triband"
+						/>
+					
+					<mx:AdvancedDataGridColumn 
+						headerText="Camera"
+						textAlign="center"
+						dataField="camera"
+						/>
+					
+					<mx:AdvancedDataGridColumn
+						headerText="Video"
+						textAlign="center"
+						dataField="video"
+						/>
+					
+					<mx:AdvancedDataGridColumn
+						headerText="Highlight1"
+						textAlign="center"
+						dataField="highlight1"
+						wordWrap="true"
+						/>
+					
+					<mx:AdvancedDataGridColumn
+						headerText="Highlight2"
+						textAlign="center"
+						dataField="highlight2"
+						wordWrap="true"
+						/>
+					
+				</mx:columns>
+			</mx:AdvancedDataGrid>
+		</mx:HBox>
+	</mx:VBox>
 </components:Phone>
+

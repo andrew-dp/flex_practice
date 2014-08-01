@@ -103,13 +103,13 @@ package components
 		
 		private function traceOutPhone(event:FlexEvent):void
 		{
-			trace("phone initialized");
+//			trace("phone initialized");
 		}
 
 		public function Phone()
 		{
 			super();
-			this.addEventListener(FlexEvent.INITIALIZE, traceOutPhone)
+			this.addEventListener(FlexEvent.INITIALIZE, traceOutPhone);
 		}
 	}
 }

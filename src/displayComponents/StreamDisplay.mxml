@@ -9,59 +9,65 @@
 			
 			protected function streamSkinInitializer(event:FlexEvent):void
 			{
-				trace("stream display");
+//				trace("stream display");
 				sourceBaseInitializer( event );
 			}
 		]]>
 	</mx:Script>
 	
-	<mx:HBox>
-		<mx:Tree id="myTree" 
-				 width="250" 
-				 height="100%" 
-				 dataProvider="{streamCategories}"
-				 labelField="name"
-				 />
+	<mx:VBox>
+		<mx:HBox>
+			<mx:Button label="foo"/>
+		</mx:HBox>
 		
-		<mx:AdvancedDataGrid
-			id="eventsGrid"
-			height="650"
-			>
+		<mx:HBox>
+			<mx:Tree id="myTree" 
+					 width="250" 
+					 height="100%" 
+					 dataProvider="{streamCategories}"
+					 labelField="name"
+					 />
 			
-			<mx:dataProvider>
-				<mx:GroupingCollection id="gc" source="{nodeItems}" >
-					<mx:grouping>
-						<mx:Grouping>
-							<mx:GroupingField name="streamName"/>
-						</mx:Grouping>
-					</mx:grouping>
-				</mx:GroupingCollection>
-			</mx:dataProvider>
-			
-			<mx:columns>
-				<mx:AdvancedDataGridColumn
-					headerText="Name"
-					dataField="name"
-					width="250"
-					wordWrap="true"
-					/>
+			<mx:AdvancedDataGrid
+				id="eventsGrid"
+				height="650"
+				>
 				
-				<mx:AdvancedDataGridColumn
-					headerText="URL"
-					width="400"
-					wordWrap="true"
-					textAlign="center"
-					dataField="url"
-					/>
+				<mx:dataProvider>
+					<mx:GroupingCollection id="gc" source="{nodeItems}" >
+						<mx:grouping>
+							<mx:Grouping>
+								<mx:GroupingField name="streamName"/>
+							</mx:Grouping>
+						</mx:grouping>
+					</mx:GroupingCollection>
+				</mx:dataProvider>
 				
-				<mx:AdvancedDataGridColumn 
-					headerText="Live"
-					textAlign="center"
-					dataField="live"
-					wordWrap="true"
-					/>
-				
-			</mx:columns>
-		</mx:AdvancedDataGrid>
-	</mx:HBox>
+				<mx:columns>
+					<mx:AdvancedDataGridColumn
+						headerText="Name"
+						dataField="name"
+						width="250"
+						wordWrap="true"
+						/>
+					
+					<mx:AdvancedDataGridColumn
+						headerText="URL"
+						width="400"
+						wordWrap="true"
+						textAlign="center"
+						dataField="url"
+						/>
+					
+					<mx:AdvancedDataGridColumn 
+						headerText="Live"
+						textAlign="center"
+						dataField="live"
+						wordWrap="true"
+						/>
+					
+				</mx:columns>
+			</mx:AdvancedDataGrid>
+		</mx:HBox>
+	</mx:VBox>
 </components:Stream>
