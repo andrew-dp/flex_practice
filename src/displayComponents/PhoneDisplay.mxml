@@ -9,9 +9,9 @@
 			
 			protected function phoneSkinInitializer(event:FlexEvent):void
 			{
+				trace("phone display");
 				sourceBaseInitializer( event );
 			}
-			
 		]]>
 	</mx:Script>
 	

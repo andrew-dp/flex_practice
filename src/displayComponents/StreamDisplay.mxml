@@ -9,14 +9,13 @@
 			
 			protected function streamSkinInitializer(event:FlexEvent):void
 			{
+				trace("stream display");
 				sourceBaseInitializer( event );
 			}
-			
 		]]>
 	</mx:Script>
 	
 	<mx:HBox>
-		
 		<mx:Tree id="myTree" 
 				 width="250" 
 				 height="100%" 
@@ -65,5 +64,4 @@
 			</mx:columns>
 		</mx:AdvancedDataGrid>
 	</mx:HBox>
-	
 </components:Stream>

@@ -1,6 +1,7 @@
 package components
 {
 	import mx.collections.ArrayCollection;
+	import mx.events.FlexEvent;
 	
 	import vo.CategoryVO;
 	
@@ -91,6 +92,7 @@ package components
 			
 			return stream;
 		}
+
 		
 		override protected function parseXML( xmlNodes:XML ):Array
 		{
@@ -109,10 +111,16 @@ package components
 			}
 			return nodeItems;
 		}
+		
+		private function traceOutStream(event:FlexEvent):void
+		{
+			trace("stream initialized");
+		}
 
 		public function Stream()
 		{
 			super();
+			this.addEventListener(FlexEvent.INITIALIZE, traceOutStream)
 		}
 	}
 }

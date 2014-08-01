@@ -1,6 +1,7 @@
 package components
 {
 	import mx.collections.ArrayCollection;
+	import mx.events.FlexEvent;
 	
 	import vo.CategoryVO;
 
@@ -73,6 +74,8 @@ package components
 			phoneCategories.addItem( filtered9Category ); 
 		}
 		
+
+		
 		override protected function parseXML( xmlNodes:XML ):Array 
 		{
 			nodeItems = new Array();
@@ -97,10 +100,16 @@ package components
 			}
 			return nodeItems;
 		}
+		
+		private function traceOutPhone(event:FlexEvent):void
+		{
+			trace("phone initialized");
+		}
 
 		public function Phone()
 		{
 			super();
+			this.addEventListener(FlexEvent.INITIALIZE, traceOutPhone)
 		}
 	}
 }

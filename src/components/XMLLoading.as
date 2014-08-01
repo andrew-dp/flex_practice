@@ -66,9 +66,15 @@ package components
 			xmlLoader.load(new URLRequest(url));
 		}
 		
+		public function traceOut(event:FlexEvent):void
+		{
+			trace("XMLLoading initialized");
+		}
+		
 		public function XMLLoading()
 		{
 			super();
+			this.addEventListener(FlexEvent.INITIALIZE, traceOut);
 		}
 	}
 }

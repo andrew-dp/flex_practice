@@ -7,29 +7,13 @@
 				xmlns:components="components.*" 
 				xmlns:displayComponents="displayComponents.*">
 	
-	<mx:Script>
-		<![CDATA[
-			protected function streamTab_clickHandler(event:MouseEvent):void
-			{
-				streamDisplay.createComponentsFromDescriptors();
-			}
-			
-			protected function phoneTab_clickHandler(event:MouseEvent):void
-			{
-				phoneDisplay.createComponentsFromDescriptors();				
-			}
-			
-		]]>
-	</mx:Script>
-	
-	
 	<mx:TabNavigator>
 		
-		<mx:VBox  label="Phone Display" click="phoneTab_clickHandler(event)" id="phoneDisplay" creationPolicy="none">
+		<mx:VBox label="Phone Display">
 			<displayComponents:PhoneDisplay/>
 		</mx:VBox>
 		
-		<mx:VBox label="Stream Display" click="streamTab_clickHandler(event)" id="streamDisplay" creationPolicy="none">
+		<mx:VBox label="Stream Display">
 			<displayComponents:StreamDisplay />
 		</mx:VBox>
 		
