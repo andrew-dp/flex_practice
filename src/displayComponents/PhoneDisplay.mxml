@@ -51,12 +51,12 @@
 			
 			protected function applyFilters_clickHandler(event:MouseEvent):void
 			{
-				super.applyFilters( priceMax, triband, camera, video, nameFilter, descriptionFilter );
+				this.applyFilters();
 			}
 			
 			protected function removeFilters_clickHandler(event:MouseEvent):void
 			{
-				super.resetFilters();
+				this.resetFilters();
 			}
 			
 		]]>

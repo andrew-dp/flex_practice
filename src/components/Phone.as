@@ -1,5 +1,7 @@
 package components
 {
+	import flash.utils.ByteArray;
+	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.events.FlexEvent;
@@ -98,24 +100,40 @@ package components
 				var product:ProductVO = new ProductVO( productId, name, description, price, image, series, triband, camera, video, highlight1, highlight2 );
 				
 				nodeItems.push(product);
+				filteredPhones = nodeItems.con
 			}
-			
-			filteredPhones = new Array();
-			filteredPhones = nodeItems;
 			
 			return nodeItems;
 		}
 		
+//		private function clone(source:Object):Array 
+//		{ 
+//			var myBA:ByteArray = new ByteArray(); 
+//			myBA.writeObject(source); 
+//			myBA.position = 0; 
+//			return(myBA.readObject()); 
+//		}
 
 		//----------------------------------------------------
-
-		protected var filteredPhones:Array;
+		[Bindable]
+		protected var filteredPhones:Array = new Array();
 		
+		[Bindable]
 		protected var descriptionFilter:String;
+		
+		[Bindable]
 		protected var nameFilter:String;
+		
+		[Bindable]
 		protected var video:Boolean = true;
+		
+		[Bindable]
 		protected var camera:Boolean = true;
+		
+		[Bindable]
 		protected var triband:Boolean = true;
+		
+		[Bindable]
 		protected var priceMax:Number;
 		
 		
@@ -127,7 +145,7 @@ package components
 		//--------------------- FILTERS -----------------------
 		protected function filterPrice( product:ProductVO ):Boolean
 		{
-			return ( product.price <= priceMax );
+			return ( product.price >= priceMax );
 		}
 		
 		protected function filterVideo( product:ProductVO ):Boolean
@@ -157,21 +175,27 @@ package components
 
 		//------------ APPLY FILTERS-------------------------------------------
 		
-		protected function applyFilters( priceMax:Number, triband:Boolean, camera:Boolean, video:Boolean, nameFilter:String, descriptionFilter:String ):void
+		protected function applyFilters():Array
 		{
-			filteredPhones.filter(filterPrice);
-			filteredPhones.filter(filterVideo);
-			filteredPhones.filter(filterCamera);
-			filteredPhones.filter(filterTriband);
-			filteredPhones.filter(filterDescription);
-			filteredPhones.filter(filterName);
-			
-			trace("vars: " + " " + priceMax+ " " + triband+ " " + camera+ " " + video+ " " + nameFilter+ " " + descriptionFilter);
+			for( var i:int = filteredPhones.length - 1; i >= 0; i-- )
+			{
+				var phone:ProductVO = filteredPhones[i];
+				if ( !( filterPrice(phone) && filterVideo(phone) && filterCamera(phone) && filterTriband(phone) && filterDescription(phone) && filterName(phone) ) )
+				{
+					trace("filtered length before: " + filteredPhones.length);
+					filteredPhones.splice(i, 1);
+					trace("i: " + i);
+					trace("filtered length after: " + filteredPhones.length);
+				}
+			}
+			filteredPhones;
+			return filteredPhones;
 		}
 		
 		protected function resetFilters():void
 		{
 			filteredPhones = nodeItems;
+			trace(filteredPhones.length);
 		}
 		
 		//----------------------------------------------------
